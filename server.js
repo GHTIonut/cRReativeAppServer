@@ -1,9 +1,8 @@
-// const { stringify } = require("querystring");
-
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const fs = require("fs");
+const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
 app.use(cors());
@@ -13,7 +12,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Bine ati venit pe site-ul nostru!" });
 });
 
-app.post("/accounts", (req, res) => {
+app.post("/accounts", async (req, res) => {
   const { username, password, email } = req.body;
 
   if (!username || !password || !email) {
@@ -37,10 +36,22 @@ app.post("/accounts", (req, res) => {
       }
     }
   }
-  const newUser = { id, username, password, email };
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = { id, username, password: hashedPassword, email };
   accounts.push(newUser);
 
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
+
+  res.json({
+    message: "Cont creat cu succes!",
+    user: {
+      id,
+      username,
+      email,
+    },
+  });
 });
 
 app.listen(3000, () => {

@@ -295,5 +295,41 @@
     "username": "asd",
     "password": "asd",
     "email": "asd"
+  },
+  {
+    "id": "6df2c0fc-d32c-4147-814d-fcc15195db34",
+    "username": "asdasd",
+    "password": "asdasd",
+    "email": "asdasd"
+  },
+  {
+    "id": "e1dce120-962b-4166-83f8-d0d3ae8ae043",
+    "username": "asd",
+    "password": "asd",
+    "email": "asd"
+  },
+  {
+    "id": "bd17fc5a-d5cb-45ae-99ec-fc6987a32f04",
+    "username": "asd",
+    "password": "asd",
+    "email": "asd"
+  },
+  {
+    "id": "5b5b5e37-502f-4992-b3e1-311cfddaf4b1",
+    "username": "asd",
+    "password": "asd",
+    "email": "asd"
+  },
+  {
+    "id": "424fe90e-3b80-4826-9f7c-b6b2d4ff287d",
+    "username": "asd",
+    "password": "$2b$10$yOz/bSqdl.4KYMuaDSmV5eKS/myrcDdw6H6X0hnr6lUHnLWUMSm92",
+    "email": "asd"
+  },
+  {
+    "id": "354adb3b-b5fb-44e1-92ca-d50ef3536d88",
+    "username": "asdas",
+    "password": "$2b$10$b6.DEJup/LUlvC0I.kt8k.Yllwbg9cZFgdUqTJJOCyjf7vZTcNEem",
+    "email": "asdasd"
   }
 ]
