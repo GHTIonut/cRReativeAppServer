@@ -32,7 +32,13 @@ app.post("/loginCheck", async (req, res) => {
 
   const token = jwt.sign({ email: user.email }, SECRET, { expiresIn: "1h" });
 
-  res.json({ message: "Login successful", token });
+  const safeUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
+
+  res.json({ message: "Login successful", token, user: safeUser });
 });
 
 app.post("/accounts", async (req, res) => {
