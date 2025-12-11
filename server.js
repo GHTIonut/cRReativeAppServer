@@ -4,6 +4,8 @@ const cors = require("cors");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+const SECRET = "GHTCRS";
 
 app.use(cors());
 app.use(express.json());
@@ -12,10 +14,31 @@ app.get("/", (req, res) => {
   res.json({ message: "Bine ati venit pe site-ul nostru!" });
 });
 
+app.post("/loginCheck", async (req, res) => {
+  const { password, email } = req.body;
+
+  const accounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
+  const user = accounts.find((account) => account.email === email);
+
+  if (!user) {
+    return res.status(400).json({ message: "User not found!" });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res.status(400).json({ message: "Wrong password" });
+  }
+
+  const token = jwt.sign({ email: user.email }, SECRET, { expiresIn: "1h" });
+
+  res.json({ message: "Login successful", token });
+});
+
 app.post("/accounts", async (req, res) => {
   const { username, password, email } = req.body;
 
-  if (!username || !password || !email) {
+  if (!password || !email) {
     return res
       .status(400)
       .json({ message: "Toate campurile sunt obligatorii!" });
