@@ -17,6 +17,16 @@ app.get("/", (req, res) => {
 app.post("/loginCheck", async (req, res) => {
   const { password, email } = req.body;
 
+  if (!fs.readFileSync("accounts.json")) {
+    return res.status(400).json({ message: "No accounts found!" });
+  }
+
+  const data = fs.readFileSync("accounts.json", "utf-8");
+
+  if (!data.trim()) {
+    return res.status(400).json("No accounts found!");
+  }
+
   const accounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
   const user = accounts.find((account) => account.email === email);
 
@@ -36,18 +46,21 @@ app.post("/loginCheck", async (req, res) => {
     id: user.id,
     username: user.username,
     email: user.email,
+    birthday: user.birthday,
+    minute: user.minute,
+    second: user.second,
+    gender: user.gender,
   };
 
   res.json({ message: "Login successful", token, user: safeUser });
 });
 
 app.post("/accounts", async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, birthday, minute, second, gender } =
+    req.body;
 
-  if (!password || !email) {
-    return res
-      .status(400)
-      .json({ message: "Toate campurile sunt obligatorii!" });
+  if (!username || !password || !email) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const id = uuidv4();
@@ -66,9 +79,21 @@ app.post("/accounts", async (req, res) => {
     }
   }
 
+  if (accounts.some((acc) => acc.email === email)) {
+    return res.status(400).json({ message: "Email already exists!" });
+  }
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = { id, username, password: hashedPassword, email };
+  const newUser = {
+    id,
+    username,
+    password: hashedPassword,
+    email,
+    birthday,
+    minute,
+    second,
+    gender,
+  };
   accounts.push(newUser);
 
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
@@ -79,6 +104,10 @@ app.post("/accounts", async (req, res) => {
       id,
       username,
       email,
+      birthday,
+      minute,
+      second,
+      gender,
     },
   });
 });

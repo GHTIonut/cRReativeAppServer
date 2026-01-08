@@ -10,5 +10,41 @@
     "username": "Blizzlike99",
     "password": "$2b$10$9059edjtftJbf720.Ble8.pnff1WYtN0T6j12SyjvlEIMjhgWOqVK",
     "email": "ghitaionutcristian96@yahoo.com"
+  },
+  {
+    "id": "c7f2ab43-8543-45b4-b37a-b53b20e34bc4",
+    "username": "Blizzlike99",
+    "password": "$2b$10$XVps2EHWUuOApq2gEyPzTeqrjTTdOvCqe7.FR609oI9Ea9XcQsCzu",
+    "email": "lineage2reborn96@yahoo.com"
+  },
+  {
+    "id": "6a8b2f3f-19cd-4ba3-96e2-74ccf9d5923f",
+    "username": "Ionut",
+    "password": "$2b$10$HgpVrWUsqFYdgjOD/3wqaecdsDEAlSJQUKAPBjcvd6F8OLv19C2Zq",
+    "email": "Ionut@gmail.com",
+    "birthday": "2026-01-06",
+    "minute": "1",
+    "second": "1",
+    "gender": ""
+  },
+  {
+    "id": "c92fe541-2c7c-4f77-ac95-9b702d94e568",
+    "username": "ASDASD",
+    "password": "$2b$10$PwOsWGZXD880Qwgsl/o62..f4FGmcPvQ2OxBCW5tZZ0MF0sUK.uei",
+    "email": "ion@gmail.com",
+    "birthday": "2026-01-23",
+    "minute": "-11",
+    "second": "1",
+    "gender": "female"
+  },
+  {
+    "id": "4952b1da-5e53-4e70-ad28-61c7d66ce3b4",
+    "username": "IonutTest1",
+    "password": "$2b$10$Gq52ZfxnM3ZtYfnNyDVBQ.hJSQGFB8Cl3HLVZ08LrA/M10yOyLyKi",
+    "email": "ionutTest1@yahoo.com",
+    "birthday": "2026-01-08",
+    "minute": "1",
+    "second": "1",
+    "gender": "female"
   }
 ]
