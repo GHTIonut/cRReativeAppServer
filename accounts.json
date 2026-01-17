@@ -46,5 +46,28 @@
     "minute": "1",
     "second": "1",
     "gender": "female"
+  },
+  {
+    "id": "fd747d29-3af2-4113-b15f-af8919036494",
+    "username": "asdasd",
+    "password": "$2b$10$eeSwl4j9nRK6JWeWQXRMC.C3z9cppf3Cjtk2RAjvxAsSOlPpEVYhW",
+    "email": "asdasdasdasd@asdasdsa.com",
+    "birthday": "2025-12-28",
+    "placeOfBirth": "",
+    "minute": "2",
+    "second": "2",
+    "gender": ""
+  },
+  {
+    "id": "f62bca04-7cb0-4453-b316-474c335d5d85",
+    "username": "IuliaEne",
+    "password": "$2b$10$CmI1f5cHg/QEeiaSnbUIUeakWuK5tzxmBEEg2o2y/2oWA0hR1U/yW",
+    "email": "iuliaene01@gmail.com"
+  },
+  {
+    "id": "cf677bca-0ffa-463e-b690-2248338fa88b",
+    "username": "IuliaEne",
+    "password": "$2b$10$nijObxyuvtBqp51IutA5TewRe2T0V6U7zk9nqLBPvVrYxT0xs34nu",
+    "email": "iiuliaene01@gmail.com"
   }
 ]

@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({ message: "Bine ati venit pe site-ul nostru!" });
+  res.json({ message: "Welcome to our website!" });
 });
 
 app.post("/loginCheck", async (req, res) => {
@@ -28,7 +28,7 @@ app.post("/loginCheck", async (req, res) => {
   }
 
   const accounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
-  const user = accounts.find((account) => account.email === email);
+  const user = accounts.findu((account) => account.email === email);
 
   if (!user) {
     return res.status(400).json({ message: "User not found!" });
@@ -46,18 +46,13 @@ app.post("/loginCheck", async (req, res) => {
     id: user.id,
     username: user.username,
     email: user.email,
-    birthday: user.birthday,
-    minute: user.minute,
-    second: user.second,
-    gender: user.gender,
   };
 
   res.json({ message: "Login successful", token, user: safeUser });
 });
 
 app.post("/accounts", async (req, res) => {
-  const { username, password, email, birthday, minute, second, gender } =
-    req.body;
+  const { username, password, email } = req.body;
 
   if (!username || !password || !email) {
     return res.status(400).json({ message: "All fields are required" });
@@ -89,10 +84,6 @@ app.post("/accounts", async (req, res) => {
     username,
     password: hashedPassword,
     email,
-    birthday,
-    minute,
-    second,
-    gender,
   };
   accounts.push(newUser);
 
@@ -104,10 +95,6 @@ app.post("/accounts", async (req, res) => {
       id,
       username,
       email,
-      birthday,
-      minute,
-      second,
-      gender,
     },
   });
 });
