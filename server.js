@@ -28,7 +28,7 @@ app.post("/loginCheck", async (req, res) => {
   }
 
   const accounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
-  const user = accounts.findu((account) => account.email === email);
+  const user = accounts.find((account) => account.email === email);
 
   if (!user) {
     return res.status(400).json({ message: "User not found!" });
