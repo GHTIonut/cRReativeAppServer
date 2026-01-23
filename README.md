@@ -1,2 +1,2 @@
 # cRReativeAppServer
-nodeJS Server
+nodeJS Server for hroscope application.
