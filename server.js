@@ -171,6 +171,36 @@ app.get("/news", (req, res) => {
   });
 });
 
+app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
+  const { sign, country, city, birthday, birthMinute, birthSecond } = req.body;
+  const data = fs.readFileSync("accounts.json", "utf-8");
+  const accounts = JSON.parse(data);
+  const user = accounts.find((acc) => acc.email === req.user.email);
+  if (!user) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+  user.personalInfo = {
+    sign,
+    country,
+    city,
+    birthday,
+    birthMinute,
+    birthSecond,
+  };
+  fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
+  res.json({ message: "Personal info updated successfully.", user });
+});
+
+app.get("/getPersonalInfo", authMiddleware, (req, res) => {
+  const data = fs.readFileSync("accounts.json", "utf-8");
+  const accounts = JSON.parse(data);
+  const user = accounts.find((acc) => acc.email === req.user.email);
+  if (!user) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+  res.json(user.personalInfo || {});
+});
+
 app.listen(3000, () => {
   console.log("Server running at http://localhost:3000");
 });
