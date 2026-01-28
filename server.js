@@ -74,6 +74,14 @@ app.post("/accounts", async (req, res) => {
     }
   }
 
+  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+  if (username.trim().length < 3) {
+    return res
+      .status(400)
+      .json({ message: "Username must have atleast 5 characters" });
+  }
+
   if (accounts.some((acc) => acc.email === email)) {
     return res.status(400).json({ message: "Email already exists!" });
   }
