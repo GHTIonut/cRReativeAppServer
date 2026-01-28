@@ -76,7 +76,13 @@ app.post("/accounts", async (req, res) => {
 
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
 
-  if (username.trim().length < 3) {
+  if (!usernameRegex.test(username)) {
+    return res
+      .status(400)
+      .json({ message: "Username must contain only letters, numbers and _" });
+  }
+
+  if (username.trim().length < 5) {
     return res
       .status(400)
       .json({ message: "Username must have atleast 5 characters" });
