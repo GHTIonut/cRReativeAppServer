@@ -105,7 +105,7 @@ app.post("/accounts", async (req, res) => {
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
 
   res.json({
-    message: "Cont creat cu succes!",
+    message: "Account succesfully created!",
     user: {
       id,
       username,
