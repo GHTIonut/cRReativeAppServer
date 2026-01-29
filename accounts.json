@@ -1,6 +1,16 @@
+[
   {
-    "id": "2814f8f2-cc8c-41da-a288-3ff8e4e303e6",
-    "username": "Cristian99",
-    "password": "$2b$10$c7c880P6MndJoaGcptjYyuzj3O4wDA.nv9N749XsivfnHW5VwG9Ta",
-    "email": "ghita@yahoo.com"
+    "id": "4e42683a-f693-4066-aefb-0ae6f9af1a18",
+    "username": "Blizzlike99",
+    "password": "$2b$10$pINmojVEJ6/qHb1QfETmSuX3RNebKFqshnQkkK.aQxkbP2CTJp2F.",
+    "email": "ghitaionutcristian96@yahoo.com",
+    "personalInfo": {
+      "sign": "Taurus",
+      "country": "RO",
+      "city": "Bucharest",
+      "birthday": "1996-05-06",
+      "birthMinute": "30",
+      "birthSecond": "50"
+    }
   }
+]
