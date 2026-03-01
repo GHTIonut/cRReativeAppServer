@@ -157,6 +157,37 @@ app.post("/changePassword", authMiddleware, async (req, res) => {
   res.json({ message: "Password updated successfully" });
 });
 
+app.post("/toDoList", authMiddleware, (req, res) => {
+  const { title, description } = req.body;
+  const data = fs.readFileSync("accounts.json", "utf-8");
+  const accounts = JSON.parse(data);
+  const user = accounts.find((acc) => acc.email === req.user.email);
+  if (!user) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+  if (!user.toDoList) {
+    user.toDoList = [];
+  }
+  const newToDo = {
+    id: uuidv4(),
+    title,
+    description,
+    createdAt: new Date().toISOString(),
+  };
+  user.toDoList.push(newToDo);
+  fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
+  res.json({
+    message: "To-do succesfully added.",
+    toDo: newToDo,
+    toDoList: user.toDoList,
+  });
+  console.log("Email din token:", req.user.email);
+  console.log(
+    "Emailuri din accounts:",
+    accounts.map((a) => a.email),
+  );
+});
+
 app.get("/news", (req, res) => {
   res.json({
     aries:

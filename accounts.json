@@ -11,6 +11,14 @@
       "birthday": "1996-05-06",
       "birthMinute": "30",
       "birthSecond": "50"
-    }
+    },
+    "toDoList": [
+      {
+        "id": "57734115-66f2-4845-9384-9285c7dc51a6",
+        "title": "Primul meu to-do",
+        "description": "Testez endpoint-ul",
+        "createdAt": "2026-03-01T20:45:02.857Z"
+      }
+    ]
   }
 ]
