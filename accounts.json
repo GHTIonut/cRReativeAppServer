@@ -18,6 +18,18 @@
         "title": "Primul meu to-do",
         "description": "Testez endpoint-ul",
         "createdAt": "2026-03-01T20:45:02.857Z"
+      },
+      {
+        "id": "5fc3639a-1fcf-4541-940e-305973db9413",
+        "title": "qwdfvbnhgfdfsrses",
+        "description": "dfdgnbmmghfdsa",
+        "createdAt": "2026-03-04T12:11:07.430Z"
+      },
+      {
+        "id": "e8239927-d335-4548-a05e-4c374d7aaed9",
+        "title": "",
+        "description": "",
+        "createdAt": "2026-03-04T12:13:34.010Z"
       }
     ]
   }
