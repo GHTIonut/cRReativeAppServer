@@ -100,6 +100,7 @@ app.post("/accounts", async (req, res) => {
     password: hashedPassword,
     email,
   };
+
   accounts.push(newUser);
 
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
@@ -128,6 +129,7 @@ function authMiddleware(req, res, next) {
   } catch {
     return res.status(401).json({ message: "Invalid token" });
   }
+  console.log("Authorization header:", req.headers.authorization);
 }
 
 app.post("/changePassword", authMiddleware, async (req, res) => {
@@ -186,6 +188,25 @@ app.post("/toDoList", authMiddleware, (req, res) => {
     "Emailuri din accounts:",
     accounts.map((a) => a.email),
   );
+});
+
+app.delete("/deleteToDoList", authMiddleware, (req, res) => {
+  const { id } = req.body;
+  const data = fs.readFileSync("accounts.json", "utf-8");
+  const accounts = JSON.parse(data);
+  const user = accounts.find((acc) => acc.email === req.user.email);
+  if (!user) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+  if (!user.toDoList) {
+    user.toDoList = [];
+  }
+  user.toDoList = user.toDoList.filter((item) => item.id !== id);
+  fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
+  res.json({
+    message: "To-do deleted succesfully!",
+    toDoList: user.toDoList,
+  });
 });
 
 app.get("/news", (req, res) => {
