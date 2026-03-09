@@ -2,29 +2,29 @@
   {
     "id": "4e42683a-f693-4066-aefb-0ae6f9af1a18",
     "username": "Blizzlike99",
-    "password": "$2b$10$pINmojVEJ6/qHb1QfETmSuX3RNebKFqshnQkkK.aQxkbP2CTJp2F.",
+    "password": "$2b$10$UI0eotBn16OJk.qN/Idf.OuZP7wg9q3GaEy61djbtNjDCOgdM28c.",
     "email": "ghitaionutcristian96@yahoo.com",
     "personalInfo": {
-      "sign": "Taurus",
-      "country": "RO",
-      "city": "Bucharest",
-      "birthday": "1996-05-06",
-      "birthMinute": "30",
-      "birthSecond": "50"
+      "sign": "Leo",
+      "country": "KP",
+      "city": "Aoji",
+      "birthday": "2026-03-26",
+      "birthMinute": "12",
+      "birthSecond": "12"
     },
     "toDoList": [
       {
-        "id": "5fc3639a-1fcf-4541-940e-305973db9413",
-        "title": "qwdfvbnhgfdfsrses",
-        "description": "dfdgnbmmghfdsa",
-        "createdAt": "2026-03-04T12:11:07.430Z"
-      },
-      {
-        "id": "e8239927-d335-4548-a05e-4c374d7aaed9",
-        "title": "",
-        "description": "",
-        "createdAt": "2026-03-04T12:13:34.010Z"
+        "id": "9614fe1d-752a-452f-84ae-1e3d7e19eac3",
+        "title": "s",
+        "description": "s",
+        "createdAt": "2026-03-09T17:57:20.720Z"
       }
     ]
+  },
+  {
+    "id": "bbb15835-85cc-4a17-a6b4-4cc8a9b03a83",
+    "username": "Blizzlike99",
+    "password": "$2b$10$r.GepG4pdydjLxG3s6WHIOklVk8RfusonfI7EVZ6M4OLtmblL33ya",
+    "email": "ionut@gmail.com"
   }
 ]

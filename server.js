@@ -190,7 +190,7 @@ app.post("/toDoList", authMiddleware, (req, res) => {
   );
 });
 
-app.delete("/deleteToDoList", authMiddleware, (req, res) => {
+app.delete("/deleteToDo", authMiddleware, (req, res) => {
   const { id } = req.body;
   const data = fs.readFileSync("accounts.json", "utf-8");
   const accounts = JSON.parse(data);
