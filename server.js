@@ -175,6 +175,7 @@ app.post("/toDoList", authMiddleware, (req, res) => {
     title,
     description,
     createdAt: new Date().toISOString(),
+    done: false,
   };
   user.toDoList.push(newToDo);
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
@@ -188,6 +189,29 @@ app.post("/toDoList", authMiddleware, (req, res) => {
     "Emailuri din accounts:",
     accounts.map((a) => a.email),
   );
+});
+
+app.post("/updateToDo", authMiddleware, (req, res) => {
+  const { id, done } = req.body;
+
+  const data = fs.readFileSync("accounts.json", "utf-8");
+  const accounts = JSON.parse(data);
+
+  const user = accounts.find((acc) => acc.email === req.user.email);
+  if (!user) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+
+  const toDo = user.toDoList.find((item) => item.id === id);
+  if (!toDo) {
+    return res.status(404).json({ message: "To-do not found!" });
+  }
+
+  toDo.done = done;
+
+  fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
+
+  res.json({ message: "To-do updated", toDo });
 });
 
 app.delete("/deleteToDo", authMiddleware, (req, res) => {
