@@ -262,7 +262,8 @@ app.get("/news", (req, res) => {
 });
 
 app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
-  const { sign, country, city, birthday, birthMinute, birthSecond } = req.body;
+  const { sign, country, city, birthday, birthHour, birthMinute, birthSecond } =
+    req.body;
   const data = fs.readFileSync("accounts.json", "utf-8");
   const accounts = JSON.parse(data);
   const user = accounts.find((acc) => acc.email === req.user.email);
@@ -274,6 +275,7 @@ app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
     country,
     city,
     birthday,
+    birthHour,
     birthMinute,
     birthSecond,
   };

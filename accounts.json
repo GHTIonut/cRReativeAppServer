@@ -5,22 +5,15 @@
     "password": "$2b$10$UI0eotBn16OJk.qN/Idf.OuZP7wg9q3GaEy61djbtNjDCOgdM28c.",
     "email": "ghitaionutcristian96@yahoo.com",
     "personalInfo": {
-      "sign": "Leo",
-      "country": "KP",
-      "city": "Aoji",
-      "birthday": "2026-03-26",
-      "birthMinute": "12",
-      "birthSecond": "12"
+      "sign": "",
+      "country": "RO",
+      "city": "Bucharest",
+      "birthday": "1996-05-06",
+      "birthHour": "23",
+      "birthMinute": "23",
+      "birthSecond": "55"
     },
-    "toDoList": [
-      {
-        "id": "8a1ff4ee-e47c-4a95-88aa-615d86dd76c5",
-        "title": "Ionut",
-        "description": "Cristian",
-        "createdAt": "2026-03-09T18:28:53.405Z",
-        "done": false
-      }
-    ]
+    "toDoList": []
   },
   {
     "id": "bbb15835-85cc-4a17-a6b4-4cc8a9b03a83",
