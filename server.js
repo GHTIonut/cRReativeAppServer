@@ -170,6 +170,16 @@ app.post("/toDoList", authMiddleware, (req, res) => {
   if (!user.toDoList) {
     user.toDoList = [];
   }
+  const titleTooLong = title.length > 30;
+  const descriptionTooLong = description.length > 100;
+  if (titleTooLong || descriptionTooLong) {
+    return res.status(400).json({
+      titleMessage: titleTooLong ? "Title must not exceed 30 characters" : "",
+      descriptionMessage: descriptionTooLong
+        ? "Description must not exceed 100 characters."
+        : "",
+    });
+  }
   const newToDo = {
     id: uuidv4(),
     title,

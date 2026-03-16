@@ -5,15 +5,23 @@
     "password": "$2b$10$UI0eotBn16OJk.qN/Idf.OuZP7wg9q3GaEy61djbtNjDCOgdM28c.",
     "email": "ghitaionutcristian96@yahoo.com",
     "personalInfo": {
-      "sign": "",
+      "sign": "Cancer",
       "country": "RO",
-      "city": "Bucharest",
+      "city": "Constanţa",
       "birthday": "1996-05-06",
-      "birthHour": "23",
-      "birthMinute": "23",
-      "birthSecond": "55"
+      "birthHour": "6",
+      "birthMinute": "12",
+      "birthSecond": "12"
     },
-    "toDoList": []
+    "toDoList": [
+      {
+        "id": "a44f3883-94f8-4996-a79a-0374c214bacd",
+        "title": "asdasdas",
+        "description": "asd",
+        "createdAt": "2026-03-15T23:36:42.556Z",
+        "done": false
+      }
+    ]
   },
   {
     "id": "bbb15835-85cc-4a17-a6b4-4cc8a9b03a83",
