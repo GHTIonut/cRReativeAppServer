@@ -51,11 +51,15 @@ app.post("/loginCheck", async (req, res) => {
   res.json({ message: "Login successful", token, user: safeUser });
 });
 
+/* REGISTER ACCOUNT */
+
 app.post("/accounts", async (req, res) => {
   const { username, password, email } = req.body;
 
   if (!username || !password || !email) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res
+      .status(400)
+      .json({ allFieldsRequired: "All fields are required" });
   }
 
   const id = uuidv4();
@@ -75,21 +79,33 @@ app.post("/accounts", async (req, res) => {
   }
 
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
-
-  if (!usernameRegex.test(username)) {
-    return res
-      .status(400)
-      .json({ message: "Username must contain only letters, numbers and _" });
-  }
-
   if (username.trim().length < 5) {
     return res
       .status(400)
-      .json({ message: "Username must have atleast 5 characters" });
+      .json({ usernameError: "Username must have atleast 5 characters" });
+  }
+  if (!usernameRegex.test(username)) {
+    return res.status(400).json({
+      usernameError: "Username must contain only letters, numbers and _",
+    });
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res
+      .status(400)
+      .json({ emailError: "Invalid format. Exmaple: user@name.com" });
+  }
   if (accounts.some((acc) => acc.email === email)) {
-    return res.status(400).json({ message: "Email already exists!" });
+    return res.status(400).json({ emailError: "Email already exists!" });
+  }
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{6,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      passwordError:
+        "Password must be at least 6 characters long and include one uppercase letter, one number, and one special character (!@#$%^&*).",
+    });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
