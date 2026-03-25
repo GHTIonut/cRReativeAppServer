@@ -1,15 +1,8 @@
-import { julian, sidereal } from "astronomia";
+import { julian } from "astronomia";
 
-const date = new Date();
+function testJulian() {
+  const jd = julian.CalendarGregorianToJD(1996, 5, 6, 6, 0, 10);
+  console.log(jd);
+}
 
-// Convertim data în Julian Date
-const jd = julian.CalendarGregorianToJD(
-  date.getFullYear(),
-  date.getMonth() + 1,
-  date.getDate(),
-);
-
-// Calculăm timpul sideral
-const gst = sidereal.mean(jd);
-
-console.log("Greenwich Sidereal Time:", gst);
+testJulian();

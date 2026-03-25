@@ -10,6 +10,7 @@ import { sidereal } from "astronomia";
 import { julian } from "astronomia";
 import { solar } from "astronomia";
 import { moon } from "astronomia";
+import { moslemMonth } from "astronomia/jm";
 
 app.use(cors());
 app.use(express.json());
@@ -292,8 +293,15 @@ app.get("/news", (req, res) => {
 });
 
 app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
-  const { sign, country, city, birthday, birthHour, birthMinute, birthSecond } =
-    req.body;
+  const {
+    sign,
+    country,
+    city,
+    birthDate,
+    birthHour,
+    birthMinute,
+    birthSecond,
+  } = req.body;
   const data = fs.readFileSync("accounts.json", "utf-8");
   const accounts = JSON.parse(data);
   const user = accounts.find((acc) => acc.email === req.user.email);
@@ -304,7 +312,7 @@ app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
     sign,
     country,
     city,
-    birthday,
+    birthDate,
     birthHour,
     birthMinute,
     birthSecond,
@@ -322,6 +330,36 @@ app.get("/getPersonalInfo", authMiddleware, (req, res) => {
   }
   res.json(user.personalInfo || {});
 });
+
+function calculateJulianDate(year, month, day, hour, minute, second) {
+  const jd = julian.CalendarGregorianToJD(
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    second,
+  );
+  return jd;
+}
+
+function calculateSidereal(jd) {
+  const GST = sidereal.mean(jd);
+  return GST;
+}
+
+function calculateLocalSidereal(GST, long) {
+  const LST = GST + long / 15;
+  const correctedLSTPositive = LST - 24;
+  const correctedLSTNegative = LST + 24;
+  if (LST >= 24) {
+    return correctedLSTPositive;
+  } else if (LST < 0) {
+    return correctedLSTNegative;
+  } else {
+    return LST;
+  }
+}
 
 app.listen(3000, () => {
   console.log("Server running at http://localhost:3000");
