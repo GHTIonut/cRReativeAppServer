@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const cors = require("cors");
-const fs = require("fs");
-const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
-const jwt = require("jsonwebtoken");
+import cors from "cors";
+import fs from "fs";
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
 const SECRET = "GHTCRS";
 import { sidereal } from "astronomia";
 import { julian } from "astronomia";
@@ -360,6 +360,29 @@ function calculateLocalSidereal(GST, long) {
     return LST;
   }
 }
+
+function calculateObliquity(jd) {
+  const epsilonDegrees = solar.trueObliquity(jd);
+  const epsilonRadians = (epsilonDegrees * Math.PI) / 180;
+  return epsilonRadians;
+}
+
+function calculateAscendent(LST, latitude, obliquity) {
+  const lstRadians = (LST * 15 * Math.PI) / 180;
+  const latRadians = (latitude * Math.PI) / 180;
+  const numerator =
+    Math.cos(obliquity) * Math.tan(latRadians) +
+    Math.sin(obliquity) * Math.sin(lstRadians);
+  const denominator = Math.cos(lstRadians);
+  let ascendantRadians = Math.atan2(numerator, denominator);
+  let ascendantDegrees = (ascendantRadians * 180) / Math.PI;
+  if (ascendantDegrees < 0) {
+    ascendantDegrees += 360;
+  }
+  return ascendantDegrees;
+}
+
+app.get("/getAscendent", authMiddleware, (req, res) => {});
 
 app.listen(3000, () => {
   console.log("Server running at http://localhost:3000");
