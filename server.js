@@ -6,6 +6,10 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const SECRET = "GHTCRS";
+import { sidereal } from "astronomia";
+import { julian } from "astronomia";
+import { solar } from "astronomia";
+import { moon } from "astronomia";
 
 app.use(cors());
 app.use(express.json());
