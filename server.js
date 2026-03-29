@@ -294,9 +294,10 @@ app.get("/news", (req, res) => {
 
 app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
   const {
-    sign,
     country,
     city,
+    latitude,
+    longitude,
     birthDate,
     birthHour,
     birthMinute,
@@ -309,9 +310,10 @@ app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
     return res.status(404).json({ message: "User not found!" });
   }
   user.personalInfo = {
-    sign,
     country,
     city,
+    latitude,
+    longitude,
     birthDate,
     birthHour,
     birthMinute,
