@@ -5,14 +5,15 @@
     "password": "$2b$10$UI0eotBn16OJk.qN/Idf.OuZP7wg9q3GaEy61djbtNjDCOgdM28c.",
     "email": "ghitaionutcristian96@yahoo.com",
     "personalInfo": {
-      "country": "RO",
-      "city": "Bucharest",
-      "latitude": "44.43225000",
-      "longitude": "26.10626000",
-      "birthDate": "1996-05-06",
-      "birthHour": "5",
-      "birthMinute": "5",
-      "birthSecond": "5"
+      "country": "BW",
+      "city": "Hukuntsi",
+      "latitude": -23.9988,
+      "longitude": 21.77962,
+      "year": 1943,
+      "month": 10,
+      "day": 18,
+      "hour": 22,
+      "minute": 22
     },
     "toDoList": [
       {
@@ -36,7 +37,9 @@
         "createdAt": "2026-03-20T10:45:52.311Z",
         "done": false
       }
-    ]
+    ],
+    "zodiacSign": "Libra",
+    "ascendantSign": "Scorpio"
   },
   {
     "id": "bbb15835-85cc-4a17-a6b4-4cc8a9b03a83",

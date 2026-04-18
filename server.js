@@ -8,9 +8,10 @@ import jwt from "jsonwebtoken";
 const SECRET = "GHTCRS";
 import { sidereal } from "astronomia";
 import { julian } from "astronomia";
-import { solar } from "astronomia";
-import { moon } from "astronomia";
-import { moslemMonth } from "astronomia/jm";
+// import { solar } from "astronomia";
+// import { moon } from "astronomia";
+// import { moslemMonth } from "astronomia/jm";
+import { nutation } from "astronomia";
 
 app.use(cors());
 app.use(express.json());
@@ -293,34 +294,93 @@ app.get("/news", (req, res) => {
 });
 
 app.post("/updatePersonalInfo", authMiddleware, (req, res) => {
-  const {
-    country,
-    city,
-    latitude,
-    longitude,
-    birthDate,
-    birthHour,
-    birthMinute,
-    birthSecond,
-  } = req.body;
+  const { country, city, latitude, longitude, year, month, day, hour, minute } =
+    req.body;
+  const lat = Number(latitude);
+  const long = Number(longitude);
+  const y = Number(year);
+  const m = Number(month);
+  const d = Number(day);
+  const h = Number(hour);
+  const min = Number(minute);
   const data = fs.readFileSync("accounts.json", "utf-8");
   const accounts = JSON.parse(data);
   const user = accounts.find((acc) => acc.email === req.user.email);
   if (!user) {
     return res.status(404).json({ message: "User not found!" });
   }
+
+  if (isNaN(lat) || isNaN(long) || isNaN(y) || isNaN(m) || isNaN(d)) {
+    return res.status(400).json({
+      message: "Invalid birth data",
+    });
+  }
   user.personalInfo = {
     country,
     city,
-    latitude,
-    longitude,
-    birthDate,
-    birthHour,
-    birthMinute,
-    birthSecond,
+    latitude: lat,
+    longitude: long,
+    year: y,
+    month: m,
+    day: d,
+    hour: h,
+    minute: min,
   };
+
+  let zodiacSign = "";
+  if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) zodiacSign = "Aries";
+  else if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) zodiacSign = "Taurus";
+  else if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) zodiacSign = "Gemini";
+  else if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) zodiacSign = "Cancer";
+  else if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) zodiacSign = "Leo";
+  else if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) zodiacSign = "Virgo";
+  else if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) zodiacSign = "Libra";
+  else if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) zodiacSign = "Scorpio";
+  else if ((m == 11 && d >= 22) || (m == 12 && d <= 21))
+    zodiacSign = "Sagittarius";
+  else if ((m == 12 && d >= 22) || (m == 1 && d <= 19))
+    zodiacSign = "Capricorn";
+  else if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) zodiacSign = "Aquarius";
+  else if ((m == 2 && d >= 19) || (m == 3 && d <= 20)) zodiacSign = "Pisces";
+
+  const jd = julian.CalendarGregorianToJD(y, m, d + h / 24 + min / 1440);
+  const GST = sidereal.mean(jd);
+  const LST = calculateLocalSidereal(GST, long);
+  const obliquity = calculateObliquity(jd);
+  const ascendantDegrees = calculateAscendent(LST, lat, obliquity);
+  const signs = [
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
+  ];
+  const normalized = ((ascendantDegrees % 360) + 360) % 360;
+  const ascendantSign = signs[Math.floor(normalized / 30)];
+  user.zodiacSign = zodiacSign;
+  user.ascendantSign = ascendantSign;
   fs.writeFileSync("accounts.json", JSON.stringify(accounts, null, 2));
-  res.json({ message: "Personal info updated successfully.", user });
+  console.log({
+    lat,
+    long,
+    jd,
+    GST,
+    LST,
+    obliquity,
+    ascendantDegrees,
+    ascendantSign,
+  });
+  res.json({
+    message: "Personal info updated successfully.",
+    user: { ...user, zodiacSign, ascendantSign },
+  });
 });
 
 app.get("/getPersonalInfo", authMiddleware, (req, res) => {
@@ -330,43 +390,46 @@ app.get("/getPersonalInfo", authMiddleware, (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found!" });
   }
-  res.json(user.personalInfo || {});
+  res.json({
+    personalInfo: user.personalInfo || {},
+    zodiacSign: user.zodiacSign || null,
+    ascendantSign: user.ascendantSign || null,
+  });
 });
 
-function calculateJulianDate(year, month, day, hour, minute, second) {
-  const jd = julian.CalendarGregorianToJD(
-    year,
-    month,
-    day,
-    hour,
-    minute,
-    second,
-  );
-  return jd;
-}
-
-function calculateSidereal(jd) {
-  const GST = sidereal.mean(jd);
-  return GST;
+function calculateJulianDate(year, month, day, hour, minute) {
+  const decimalDay = day + hour / 24 + minute / 1440;
+  return julian.CalendarGregorianToJD(year, month, decimalDay);
 }
 
 function calculateLocalSidereal(GST, long) {
-  const LST = GST + long / 15;
-  const correctedLSTPositive = LST - 24;
-  const correctedLSTNegative = LST + 24;
-  if (LST >= 24) {
-    return correctedLSTPositive;
-  } else if (LST < 0) {
-    return correctedLSTNegative;
-  } else {
-    return LST;
-  }
+  let LST = GST + long / 15;
+
+  LST = LST % 24;
+  if (LST < 0) LST += 24;
+
+  return LST;
 }
 
+// function calculateObliquity(jd) {
+//   const eps0 = nutation.meanObliquity(jd); // oblicitate medie
+//   const { deltaEpsilon } = nutation.nutation(jd); // nutation în oblicitate
+//   const epsilonDegrees = eps0 + deltaEpsilon;
+//   return (epsilonDegrees * Math.PI) / 180;
+// }
+
 function calculateObliquity(jd) {
-  const epsilonDegrees = solar.trueObliquity(jd);
-  const epsilonRadians = (epsilonDegrees * Math.PI) / 180;
-  return epsilonRadians;
+  const eps0 = nutation.meanObliquity(jd);
+  const nut = nutation.nutation(jd);
+
+  console.log("eps0:", eps0);
+  console.log("nutation:", nut);
+
+  const deltaEpsilon = Array.isArray(nut) ? nut[0] : (nut?.deltaEpsilon ?? 0);
+
+  const epsilonDegrees = eps0 + deltaEpsilon;
+
+  return (epsilonDegrees * Math.PI) / 180;
 }
 
 function calculateAscendent(LST, latitude, obliquity) {
